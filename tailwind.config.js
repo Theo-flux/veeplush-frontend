@@ -25,9 +25,7 @@ export default {
         800: "#28252b",
         900: "#1e1d21",
       },
-      black: {
-        100: "#F0F0F0",
-      },
+      black: "#000",
       error: "#DC0000",
     },
     extend: {},

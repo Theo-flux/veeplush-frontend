@@ -6,7 +6,7 @@ interface IPageLayoutProps {
 
 function PageLayout({ children }: IPageLayoutProps) {
   return (
-    <main className="w-full relative top-0 left-0">
+    <main className="w-full relative top-0 left-0 h-[1500px]">
       <Nav />
       <div>{children}</div>
       <Footer />

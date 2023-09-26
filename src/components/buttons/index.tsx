@@ -36,3 +36,27 @@ export const Button: FC<IButtonProps> = ({ className, text, onClick }) => {
     </button>
   );
 };
+
+interface ICTABtnProps {
+  disabled?: boolean;
+  text: string;
+  className?: string;
+  onClick?: () => void;
+}
+
+export const CTABtn: FC<ICTABtnProps> = ({
+  onClick,
+  className,
+  text,
+  disabled,
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`p-4 px-6 text-veeblack text-md text-center font-semibold transition-all duration-500 bg-white hover:bg-purple hover:text-white disabled:bg-violet-100 text-xl md:text-3xl ${className}`}
+    >
+      {text}
+    </button>
+  );
+};

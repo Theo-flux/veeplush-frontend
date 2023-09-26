@@ -30,7 +30,7 @@ function Nav() {
   const isActiveRoute = (href: string) => location.pathname === href;
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white shadow">
+    <nav className="sticky z-50 top-0 left-0 w-full bg-white shadow">
       <div className="w-[90%] max-w-[1100px] mx-auto">
         <div className="flex justify-between items-center py-2">
           <figure className="flex items-center">
@@ -53,7 +53,7 @@ function Nav() {
         </div>
       </div>
 
-      <div className="bg-veeblack w-full top-0 left-0">
+      <div className="bg-black w-full top-0 left-0">
         <div className="w-[90%] max-w-[300px] mx-auto">
           <ul className="flex justify-between items-center text-white">
             {navItems.map((item, index) => {
