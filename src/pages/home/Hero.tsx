@@ -3,7 +3,7 @@ import { CTABtn } from "../../components/buttons";
 function Hero() {
   return (
     <section className="w-full sm:h-[100vh] pb-8">
-      <div className="relative h-[100%] bg-[#16161650] w-full flex flex-col justify-center items-center">
+      <div className="relative h-[450px] sm:h-[80%] bg-[#16161650] w-full flex flex-col justify-center items-center">
         <div>
           <CTABtn text="Shop Now" className="" />
         </div>
