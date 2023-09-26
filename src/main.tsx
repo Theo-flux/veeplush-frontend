@@ -5,7 +5,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./config";
 import { Home, Error } from "./pages/index.ts";
 import { AppRoutes } from "./AppRoutes.tsx";
-import "./index.css";
+import "./assets/css/index.css";
 
 const router = createBrowserRouter([
   {
