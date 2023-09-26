@@ -1,5 +1,7 @@
+import PageLayout from "../../layout/PageLayout";
+
 function Home() {
-  return <div>Veeplush Home page</div>;
+  return <PageLayout>Veeplush Home page</PageLayout>;
 }
 
 export default Home;
