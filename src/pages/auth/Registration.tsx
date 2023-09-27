@@ -1,4 +1,5 @@
 import AuthLayout from "../../layout/AuthLayout";
+import { Link } from "react-router-dom";
 import { InputText, InputPassword } from "../../components";
 import { Button } from "../../components/buttons";
 
@@ -10,9 +11,9 @@ const Registration = () => {
           <h1 className="text-[30px] font-bold">Register</h1>
           <p className="text-xs">
             If you have an account,{" "}
-            <a href="/login" className="underline text-purple">
+            <Link to={{ pathname: "/login" }} className="underline text-purple">
               Login
-            </a>
+            </Link>
           </p>
         </div>
 
