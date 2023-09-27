@@ -30,7 +30,7 @@ export const Button: FC<IButtonProps> = ({ className, text, onClick }) => {
   return (
     <button
       onClick={onClick}
-      className={`py-1 px-3 text-[14px] font-light text-center font-medium transition-all duration-500 bg-purple text-white hover:bg-white hover:text-purple ${className}`}
+      className={`py-1 px-3 text-[14px] font-light text-center font-medium transition-all duration-500 bg-purple text-white hover:bg-veeblack hover:text-white ${className}`}
     >
       {text}
     </button>
@@ -54,7 +54,7 @@ export const CTABtn: FC<ICTABtnProps> = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`p-4 px-6 text-veeblack text-md text-center font-semibold transition-all duration-500 bg-white hover:bg-purple hover:text-white disabled:bg-violet-100 text-xl md:text-3xl ${className}`}
+      className={`p-4 px-6 text-veeblack text-md text-center font-semibold transition-all duration-500 bg-white hover:bg-purple hover:text-white text-xl md:text-3xl ${className}`}
     >
       {text}
     </button>
