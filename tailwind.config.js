@@ -9,7 +9,7 @@ export default {
       neutral: {
         200: "#E5E5E5",
       },
-      gray: "#666468",
+      grey: "#C4C4C4",
       purple: "#F748EA",
       green: "#8BF602",
       veeblack: "#161616",
