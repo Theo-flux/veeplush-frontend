@@ -1,6 +1,13 @@
+import { Login, Registration } from "./pages";
+
 export const AppRoutes = [
   {
-    path: "",
-    element: <></>,
+    path: "/login",
+    element: <Login />,
+  },
+
+  {
+    path: "/register",
+    element: <Registration />,
   },
 ];

@@ -46,8 +46,13 @@ function Nav() {
             <RiShoppingCart2Fill className="text-xl text-veeblack" />
 
             <div className="ml-4 flex items-center">
-              <TransparentBtn className="mr-2" text="Login" />
-              <Button text="Sign up" />
+              <Link to={{ pathname: "/login" }}>
+                <TransparentBtn className="mr-2" text="Login" />
+              </Link>
+
+              <Link to={{ pathname: "/register" }}>
+                <Button text="Sign up" />
+              </Link>
             </div>
           </div>
         </div>
