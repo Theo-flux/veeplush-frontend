@@ -67,3 +67,74 @@ export const InputPassword = ({
     </div>
   );
 };
+
+interface ISelectInput {
+  id: string;
+  label: string;
+  placeholder: string;
+  options: Array<number | string>;
+}
+
+export const SelectInput = ({
+  id,
+  label,
+  placeholder,
+  options,
+}: ISelectInput) => {
+  return (
+    <div>
+      <label htmlFor={id} className="block mb-2 text-sm font-medium">
+        {label}
+      </label>
+      <select
+        id={id}
+        className="bg-transparent border border-grey text-grey text-sm focus:ring-purple focus:border-purple block w-full p-2"
+      >
+        <option selected>{placeholder}</option>
+        {options.map((data, index) => (
+          <option key={index} value={data}>
+            {data}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+interface IInputNumber {
+  id: string;
+  label: string;
+  placeholder: string;
+  min: number;
+  max: number;
+  name: string;
+  onChange: () => void;
+}
+
+export const InputNumber = ({
+  id,
+  label,
+  placeholder,
+  min,
+  max,
+  name,
+  onChange,
+}: IInputNumber) => {
+  return (
+    <div>
+      <label htmlFor={id} className="block mb-2 text-sm font-medium">
+        {label}
+      </label>
+      <input
+        type="number"
+        id={id}
+        placeholder={placeholder}
+        min={min}
+        max={max}
+        name={name}
+        className="bg-transparent border border-grey text-grey text-sm focus:ring-purple focus:border-purple block w-full p-2"
+        onChange={onChange}
+      />
+    </div>
+  );
+};

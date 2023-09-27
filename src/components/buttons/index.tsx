@@ -54,7 +54,7 @@ export const CTABtn: FC<ICTABtnProps> = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`p-4 px-6 text-veeblack text-md text-center font-semibold transition-all duration-500 bg-white hover:bg-purple hover:text-white text-xl md:text-3xl ${className}`}
+      className={`py-4 px-6 text-veeblack text-md text-center font-semibold transition-all duration-500 bg-white hover:bg-purple hover:text-white text-xl md:text-3xl ${className}`}
     >
       {text}
     </button>
