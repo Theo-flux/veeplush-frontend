@@ -138,3 +138,35 @@ export const InputNumber = ({
     </div>
   );
 };
+
+
+
+interface IInputFilterProps {
+  id: string;
+  label: string;
+  options: Array<number | string>;
+}
+
+export const InputFilter = ({
+  id,
+  label,
+  options,
+}: IInputFilterProps) => {
+  return (
+    <div className="flex justify-start items-center w-full mr-2">
+      <label htmlFor={id} className="block text-sm font-medium mr-1">
+        {label}
+      </label>
+      <select
+        id={id}
+        className="bg-white text-black text-sm block w-full py-[0.5px] px-1"
+      >
+        {options.map((data, index) => (
+          <option key={index} value={data}>
+            {data}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};

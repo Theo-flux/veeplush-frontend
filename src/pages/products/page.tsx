@@ -8,11 +8,24 @@ function Products() {
       <div className="relative w-full mt-28">
         <div className="fixed w-full z-40">
           <div className="bg-black mt-1 w-full">
-            <Container className="flex justify-between items-cente py-2">
-              <div className="text-white flex justify-start items-center">
-                <p>category:</p>
-                <p>Sort by:</p>
-              </div>
+            <Container className="flex flex-col md:flex-row justify-between md:items-center py-2 relative">
+              {/* <div className="absolute text-white flex flex-col md:flex-row justify-start md:items-center items-start w-fit mb-2 md:mb-0">
+                <div className="w-fit mr-2 mb-2 md:mb-0">
+                  <InputFilter
+                    id="category"
+                    label="category:"
+                    options={["Wigs", "Frontals", "Bundles"]}
+                  />
+                </div>
+
+                <div className="w-fit">
+                  <InputFilter
+                    id="sort_by"
+                    label="price:"
+                    options={["price(Low - High)", "price(High - Low)"]}
+                  />
+                </div>
+              </div> */}
 
               <p className="text-white">150 products</p>
             </Container>
