@@ -1,4 +1,5 @@
 import { CTABtn } from "../../components/buttons";
+import Arrow from "../../assets/images/more_line.svg";
 
 function Hero() {
   return (
@@ -10,7 +11,11 @@ function Hero() {
 
         <div className="absolute bottom-[-20px] w-full text-white flex flex-col justify-center items-center">
           <p className="text-white">More</p>
-          <div className="h-[80px] md:h-[136px] w-[1px] bg-white mt-4"></div>
+          <img
+            className="mt-4"
+            src={Arrow}
+            alt="arrow"
+          />
         </div>
       </div>
     </section>

@@ -7,8 +7,8 @@ function Home() {
     <PageLayout>
       <div className="bg-[url(https://res.cloudinary.com/daclozrmx/image/upload/v1695742726/veeplush/portrait-beautiful-woman-with-long-straight-brown-hair-studio_1_otp5ao.png)] w-[100vw] bg-contain md:bg-cover bg-no-repeat">
         <Hero />
-        <Collections />
-        <Collections />
+        <Collections text="Shop by collections"/>
+        <Collections text="Collection list"/>
       </div>
     </PageLayout>
   );

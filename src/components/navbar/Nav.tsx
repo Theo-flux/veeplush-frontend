@@ -63,7 +63,7 @@ function Nav() {
                   key={index}
                   className={` ${
                     isActiveRoute(path) && "text-white bg-purple font-medium"
-                  } text-center text-[14px] hover:text-violet-600 px-2 py-4 hover:bg-purple transition-all duration-300`}
+                  } text-center text-[14px] hover:text-violet-600 px-2 py-4 hover:bg-purple transition-all duration-300 cursor-pointer`}
                 >
                   <Link to={path}>{name}</Link>
                 </li>
