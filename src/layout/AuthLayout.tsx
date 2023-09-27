@@ -7,7 +7,7 @@ interface IAuthLayoutProps {
 
 function AuthLayout({ children }: IAuthLayoutProps) {
   const handleBack = () => {
-    window.history.back();
+    window.location.pathname = "/";
   };
   return (
     <main className="w-full h-[100vh] overflow-hidden">

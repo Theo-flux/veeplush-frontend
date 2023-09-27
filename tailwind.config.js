@@ -10,6 +10,7 @@ export default {
         200: "#E5E5E5",
       },
       grey: "#C4C4C4",
+      offwhite: "#E5E5E5",
       purple: "#F748EA",
       green: "#8BF602",
       veeblack: "#161616",

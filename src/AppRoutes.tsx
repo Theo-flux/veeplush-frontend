@@ -1,4 +1,4 @@
-import { Login, Registration } from "./pages";
+import { Login, Registration, Products } from "./pages";
 
 export const AppRoutes = [
   {
@@ -9,5 +9,10 @@ export const AppRoutes = [
   {
     path: "/register",
     element: <Registration />,
+  },
+
+  {
+    path: "/hairs",
+    element: <Products />,
   },
 ];

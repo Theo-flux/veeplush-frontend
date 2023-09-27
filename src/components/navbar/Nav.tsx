@@ -10,6 +10,11 @@ const navItems = [
   },
 
   {
+    path: "/hairs",
+    name: "Hairs",
+  },
+
+  {
     path: "/#",
     name: "About us",
   },
@@ -18,11 +23,6 @@ const navItems = [
     path: "/#",
     name: "Contact",
   },
-
-  {
-    path: "/#",
-    name: "Hairs",
-  },
 ];
 
 function Nav() {
@@ -30,7 +30,7 @@ function Nav() {
   const isActiveRoute = (href: string) => location.pathname === href;
 
   return (
-    <nav className="sticky z-50 top-0 left-0 w-full bg-white shadow">
+    <nav className="fixed z-50 top-0 left-0 w-full bg-white shadow">
       <div className="w-[90%] max-w-[1100px] mx-auto">
         <div className="flex justify-between items-center py-2">
           <figure className="flex items-center">
@@ -64,14 +64,15 @@ function Nav() {
             {navItems.map((item, index) => {
               const { name, path } = item;
               return (
-                <li
-                  key={index}
-                  className={` ${
-                    isActiveRoute(path) && "text-white bg-purple font-medium"
-                  } text-center text-[14px] hover:text-violet-600 px-2 py-4 hover:bg-purple transition-all duration-300 cursor-pointer`}
-                >
-                  <Link to={path}>{name}</Link>
-                </li>
+                <Link to={path} key={index}>
+                  <li
+                    className={` ${
+                      isActiveRoute(path) && "text-white bg-purple font-medium"
+                    } text-center text-[14px] hover:text-violet-600 px-2 py-4 hover:bg-purple transition-all duration-300 cursor-pointer`}
+                  >
+                    {name}
+                  </li>
+                </Link>
               );
             })}
           </ul>
