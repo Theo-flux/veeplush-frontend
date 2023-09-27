@@ -1,4 +1,5 @@
 import { FaCartPlus } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 // import { BsCartXFill } from "react-icons/bs";
 
 const ProductCard = () => {
@@ -11,7 +12,11 @@ const ProductCard = () => {
           className="w-full h-full object-cover"
         />
         <div className="absolute top-0 left-0 w-full h-full bg-[#00000050] flex justify-center items-center group hover:bg-[#00000090] transition-all">
-          <p className="hidden group-hover:block group-hover:text-white group-hover:underline font-bold cursor-pointer">view details</p>
+          <Link to={{ pathname: "/hair/details" }}>
+            <p className="hidden group-hover:block group-hover:text-white group-hover:underline font-bold cursor-pointer">
+              view details
+            </p>
+          </Link>
         </div>
       </figure>
 
