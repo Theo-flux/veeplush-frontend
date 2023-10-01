@@ -3,7 +3,7 @@ import Arrow from "../../assets/images/more_line.svg";
 
 function Hero() {
   return (
-    <section className="w-full sm:h-[100vh] pb-8">
+    <section className="w-full sm:h-[100vh] pb-8 mt-24">
       <div className="relative h-[450px] sm:h-[80%] bg-[#16161650] w-full flex flex-col justify-center items-center">
         <div>
           <CTABtn text="Shop Now" className="" />
