@@ -9,6 +9,12 @@ export type TCustomerLogin = {
   password: string;
 };
 
+export type TCustomerRegister = {
+  username: string;
+  email: string;
+  password: string;
+};
+
 export type TCustomerResponse = {
   id: number;
   username: string;

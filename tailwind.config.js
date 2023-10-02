@@ -29,6 +29,9 @@ export default {
       black: "#000",
       error: "#DC0000",
     },
+    fontFamily: {
+      Rozha: ["Rozha"],
+    },
     extend: {},
   },
   plugins: [],

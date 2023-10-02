@@ -32,7 +32,7 @@ function AuthLayout({ children }: IAuthLayoutProps) {
                 alt="veeplush icon"
               />
               <div className="ml-3">
-                <h3 className="hidden md:block font-italic font-extrabold text-4xl">
+                <h3 className="hidden md:block font-italic font-extrabold text-4xl font-Rozha">
                   Veeplush Hair
                 </h3>
                 <p className="font-light text-lg">lush, beauty, poise...</p>

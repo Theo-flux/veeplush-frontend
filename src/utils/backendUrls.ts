@@ -9,7 +9,7 @@ export const VEEPLUSH_URLS = {
       : "",
 
   CUSTOMER: {
-    register: "customer/register",
+    register: "customer/signup",
     login: "customer/login",
     me: "customer/me",
   },

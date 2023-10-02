@@ -4,9 +4,24 @@ import { VEEPLUSH_URLS } from "../utils/backendUrls";
 import { setToken } from "../helpers/authTokens";
 import {
   TCustomerLogin,
+  TCustomerRegister,
   TCustomerResponse,
   TLoginToken,
 } from "../types/global";
+
+export const registerCustomer = async (payload: TCustomerRegister) => {
+  try {
+    const response = await veeplushApi.post(
+      VEEPLUSH_URLS.CUSTOMER.register,
+      payload,
+    );
+    const data: TCustomerRegister = response.data;
+
+    return data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
+};
 
 export const loginCustomer = async (payload: TCustomerLogin) => {
   try {
