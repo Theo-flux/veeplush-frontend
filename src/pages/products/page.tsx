@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { allProducts } from "../../services/products";
 import PageLayout from "../../layout/PageLayout";
 import ProductCard from "./ProductCard";
+import { Button } from "../../components/buttons";
 import { Container } from "../../components";
 import { TProducts } from "../../types/global";
-import { ClipLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
 
 function Products() {
   const [products, setProducts] = useState<Array<Partial<TProducts>>>([]);
@@ -49,10 +51,10 @@ function Products() {
         </div>
 
         {isLoading ? (
-          <div className="flex justify-center items-center w-full">
-            <ClipLoader size={20} color="#fff" />
+          <div className="flex justify-center items-center w-full h-[500px]">
+            <BeatLoader size={15} color="#F748EA" />
           </div>
-        ) : (
+        ) : products ? (
           <Container className="bg-white py-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 auto-rows-auto gap-2">
             {products.map((product, index) => {
               const { image, id, price, name } = product;
@@ -68,6 +70,13 @@ function Products() {
               );
             })}
           </Container>
+        ) : (
+          <div className="mt-48 flex flex-col justify-center items-center w-full h-[1000px]">
+            <p>No products!</p>
+            <Link to={{ pathname: "/" }}>
+              <Button text="Go back home" />
+            </Link>
+          </div>
         )}
       </div>
     </PageLayout>
