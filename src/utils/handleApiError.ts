@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { isAxiosError } from "axios";
 
-export const handleDefabsApiError = (error: any) => {
+export const handleApiError = (error: any) => {
   if (import.meta.env.VITE_REACT_APP_NODE_ENV !== "production") {
     console.warn("[Axios Error....]", error);
   }
@@ -19,7 +19,12 @@ export const handleDefabsApiError = (error: any) => {
       case 401:
         return "Unauthorized User!";
       case 403:
-        return "Forbidden";
+        return (
+          response.data.message ||
+          response.data ||
+          response.data.error ||
+          "Forbidden"
+        );
       case 404:
         return response?.data.message || response?.data || "Resource not found";
       case 409:

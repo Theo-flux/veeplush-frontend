@@ -8,3 +8,4 @@ export {
   InputNumber,
   InputFilter,
 } from "./inputs/index";
+export { default as Toast } from "./toast";

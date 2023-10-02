@@ -1,4 +1,6 @@
 import { FC } from "react";
+import { ClipLoader } from "react-spinners";
+
 interface ITransparentBtnProps {
   text: string;
   className?: string;
@@ -57,6 +59,29 @@ export const CTABtn: FC<ICTABtnProps> = ({
       className={`py-4 px-6 text-veeblack text-md text-center font-semibold transition-all duration-500 bg-white hover:bg-purple hover:text-white text-xl md:text-3xl ${className}`}
     >
       {text}
+    </button>
+  );
+};
+
+interface ILoadingButtonProps {
+  text: string;
+  className?: string;
+  isLoading: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+export const LoadingButton: FC<ILoadingButtonProps> = ({
+  className,
+  text,
+  onClick,
+  isLoading,
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`py-1 px-3 text-[14px] font-light text-center font-medium transition-all duration-500 bg-purple text-white hover:bg-veeblack hover:text-white ${className}`}
+    >
+      {isLoading ? <ClipLoader size={15} color="#fff" /> : text}
     </button>
   );
 };

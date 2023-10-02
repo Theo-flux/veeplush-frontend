@@ -1,11 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { TbEyeOff, TbEye } from "react-icons/tb";
 
 interface IInputProps {
   id: string;
   name: string;
   placeholder: string;
-  onChange: () => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
 }
 
@@ -28,7 +28,7 @@ export const InputText = ({
           error ? "ring-error" : ""
         } px-3 py-2 focus:outline fous:outline-[1px] focus:outline-purple mb-1`}
       />
-      <small>{error}</small>
+      <small className="text-error">{error}</small>
     </div>
   );
 };
@@ -108,7 +108,7 @@ interface IInputNumber {
   min: number;
   max: number;
   name: string;
-  onChange: () => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const InputNumber = ({
@@ -139,19 +139,13 @@ export const InputNumber = ({
   );
 };
 
-
-
 interface IInputFilterProps {
   id: string;
   label: string;
   options: Array<number | string>;
 }
 
-export const InputFilter = ({
-  id,
-  label,
-  options,
-}: IInputFilterProps) => {
+export const InputFilter = ({ id, label, options }: IInputFilterProps) => {
   return (
     <div className="flex justify-start items-center w-full mr-2">
       <label htmlFor={id} className="block text-sm font-medium mr-1">

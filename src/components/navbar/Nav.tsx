@@ -1,7 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { thisCustomer } from "../../services/auth";
 import VeeplushLogo from "../../assets/images/veeplush_logo.svg";
-import { RiShoppingCart2Fill } from "react-icons/ri";
+import { RiShoppingCart2Fill, RiAccountBoxFill } from "react-icons/ri";
 import { TransparentBtn, Button } from "../buttons";
+import { useEffect, useState } from "react";
+import { removeToken } from "../../helpers/authTokens";
+import { TCustomerResponse } from "../../types/global";
 
 const navItems = [
   {
@@ -28,6 +33,23 @@ const navItems = [
 function Nav() {
   const location = useLocation();
   const isActiveRoute = (href: string) => location.pathname === href;
+  const [customerData, setCustomerData] = useState<Partial<TCustomerResponse>>(
+    {},
+  );
+
+  const { data, refetch } = useQuery(["current_customer"], () =>
+    thisCustomer(),
+  );
+
+  const handleLogOut = () => {
+    removeToken();
+    setCustomerData({});
+  };
+
+  useEffect(() => {
+    refetch();
+    setCustomerData(data || {});
+  }, [data, refetch]);
 
   return (
     <nav className="fixed z-50 top-0 left-0 w-full bg-white shadow">
@@ -45,15 +67,31 @@ function Nav() {
           <div className="flex items-center">
             <RiShoppingCart2Fill className="text-xl text-veeblack" />
 
-            <div className="ml-4 flex items-center">
-              <Link to={{ pathname: "/login" }}>
-                <TransparentBtn className="mr-2" text="Login" />
-              </Link>
+            {Object.keys(customerData).length !== 0 ? (
+              <div className="ml-4 flex items-center">
+                <div className="flex items-center text-purple">
+                  <RiAccountBoxFill className="text-xl" />
+                  <small className="ml-1 font-bold">
+                    {customerData.username}
+                  </small>
+                </div>
+                <TransparentBtn
+                  className="ml-2"
+                  text="Logout"
+                  onClick={handleLogOut}
+                />
+              </div>
+            ) : (
+              <div className="ml-4 flex items-center">
+                <Link to={{ pathname: "/login" }}>
+                  <TransparentBtn className="mr-2" text="Login" />
+                </Link>
 
-              <Link to={{ pathname: "/register" }}>
-                <Button text="Sign up" />
-              </Link>
-            </div>
+                <Link to={{ pathname: "/register" }}>
+                  <Button text="Sign up" />
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

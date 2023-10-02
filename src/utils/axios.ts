@@ -1,15 +1,9 @@
 import axios from "axios";
+import { VEEPLUSH_URLS } from "./backendUrls";
 import { getToken, removeToken } from "../helpers/authTokens";
 
-const env = import.meta.env.VITE_REACT_APP_NODE_ENV;
-
 const veeplushApi = axios.create({
-  baseURL:
-    env === "production"
-      ? `${import.meta.env.VITE_REACT_APP_DEFABS_PROD}`
-      : env === "development"
-      ? `${import.meta.env.VITE_REACT_APP_DEFABS_DEV}`
-      : "",
+  baseURL: VEEPLUSH_URLS.BASE_URL,
   headers: {
     Accept: "application/json",
   },
@@ -37,7 +31,7 @@ veeplushApi.interceptors.response.use(
   async (error) => {
     if (error.response) {
       if ([401].includes(error.response.status)) {
-        window.location.replace("/login");
+        // window.location.replace("/login");
         removeToken();
       }
     }
