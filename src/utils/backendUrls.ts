@@ -13,4 +13,8 @@ export const VEEPLUSH_URLS = {
     login: "customer/login",
     me: "customer/me",
   },
+
+  PRODUCT: {
+    all: "product",
+  },
 };

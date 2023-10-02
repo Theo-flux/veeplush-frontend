@@ -16,7 +16,7 @@ export const AppRoutes = [
     element: <Products />,
   },
   {
-    path: "/hair/details",
+    path: "/hair/details/:id",
     element: <ProductDetails />,
   },
 ];

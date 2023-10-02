@@ -25,6 +25,18 @@ export type TCustomerResponse = {
 };
 
 export type TLoginToken = {
-  "access_token": string;
-  "token_type": string
-}
+  access_token: string;
+  token_type: string;
+};
+
+export type TProducts = {
+  product_category_id: number;
+  image: string;
+  price: number;
+  style: Record<string, string>;
+  name: string;
+  id: number;
+  description: string;
+  length: Record<string, number>;
+  stock_qty: number;
+};
