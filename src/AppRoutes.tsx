@@ -1,4 +1,4 @@
-import { Login, Registration, Products, ProductDetails } from "./pages";
+import { Login, Registration, Products, ProductDetails, Cart } from "./pages";
 
 export const AppRoutes = [
   {
@@ -18,5 +18,9 @@ export const AppRoutes = [
   {
     path: "/hair/details/:id",
     element: <ProductDetails />,
+  },
+  {
+    path: "/cart",
+    element: <Cart />,
   },
 ];

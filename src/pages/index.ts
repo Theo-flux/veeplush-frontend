@@ -6,3 +6,4 @@ export { default as Home } from "./home/page";
 export { default as Error } from "./error/page";
 export { default as Products } from "./products/page";
 export { default as ProductDetails } from "./productdetails/page";
+export { default as Cart } from "./cart/page";

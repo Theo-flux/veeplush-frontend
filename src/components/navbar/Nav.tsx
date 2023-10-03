@@ -65,7 +65,9 @@ function Nav() {
           </figure>
 
           <div className="flex items-center">
-            <RiShoppingCart2Fill className="text-xl text-veeblack" />
+            <Link to={{ pathname: "/cart" }}>
+              <RiShoppingCart2Fill className="text-xl text-veeblack" />
+            </Link>
 
             {Object.keys(customerData).length !== 0 ? (
               <div className="ml-4 flex items-center">
