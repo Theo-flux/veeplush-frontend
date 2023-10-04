@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import AuthLayout from "../../layout/AuthLayout";
 import { useMutation } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
-import { InputText, InputPassword } from "../../components";
+import { Link, useNavigate } from "react-router-dom";
+import { InputText, InputPassword, Toast } from "../../components";
 import { LoadingButton } from "../../components/buttons";
 import { TCustomerRegister } from "../../types/global";
 import { regValidation } from "../../helpers/validation";
 import { registerCustomer } from "../../services/auth";
 
 const Registration = () => {
+  const navigate = useNavigate();
   const [regForm, setRegForm] = useState<TCustomerRegister>({
     username: "",
     email: "",
@@ -17,12 +18,14 @@ const Registration = () => {
   const [regError, setRegError] = useState<Partial<TCustomerRegister>>({});
 
   const { mutate, isLoading } = useMutation(registerCustomer, {
-    onError: (error) => {
-      console.log(error);
+    onError: (error: { detail: string }) => {
+      Toast.error(error.detail);
     },
 
     onSuccess: (data) => {
       console.log(data);
+      Toast.success("Registration successful!");
+      setTimeout(() => navigate("/login"), 1000);
     },
   });
 
@@ -40,7 +43,6 @@ const Registration = () => {
     } else {
       mutate(regForm);
     }
-
   };
 
   return (

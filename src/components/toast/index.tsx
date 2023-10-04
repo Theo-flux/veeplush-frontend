@@ -25,12 +25,12 @@ class ToastClass {
     toast.error(message, {
       icon: <MdOutlineClear size={22} />,
       style: {
-        padding: "5px 8px",
+        padding: "1rem",
         color: "#fff",
         background: "#da072b",
         borderRadius: "4px",
         fontWeight: "500",
-        minWidth: "250px",
+        width: "500px",
         height: "40px",
         textAlign: "left",
       },

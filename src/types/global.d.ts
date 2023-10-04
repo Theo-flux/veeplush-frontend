@@ -46,3 +46,24 @@ export type TProducts = {
   length: Record<string, number>;
   stock_qty: number;
 };
+
+export type TOrderItem = {
+  product_id: number;
+  sub_total: number;
+  length: number;
+  style: string;
+  qty: number;
+};
+
+export type TGetCartResponse = {
+  product_id: number;
+  order_id: number;
+  sub_total: number;
+  length: number;
+  style: string;
+  qty: string;
+  name: str;
+  price: float;
+  product_img: str;
+  stock_qty: int;
+};

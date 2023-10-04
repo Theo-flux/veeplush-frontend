@@ -8,16 +8,18 @@ import { Button } from "../../components/buttons";
 import { Container } from "../../components";
 import { TProducts } from "../../types/global";
 import { BeatLoader } from "react-spinners";
+import { useCartStore } from "../../store/customerCart";
 
 function Products() {
   const [products, setProducts] = useState<Array<Partial<TProducts>>>([]);
   const { data, isLoading } = useQuery(["all_products"], () => allProducts());
+  const { cart } = useCartStore();
+
+  const cartedIdArr = Object.values(cart).map((v) => v.product_id);
 
   useEffect(() => {
     setProducts(data || []);
   }, [data, isLoading]);
-
-  console.log(data);
 
   return (
     <PageLayout>
@@ -57,15 +59,23 @@ function Products() {
         ) : products ? (
           <Container className="bg-white py-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 auto-rows-auto gap-2">
             {products.map((product, index) => {
-              const { image, id, price, name } = product;
+              const { image, id, price, name, length, style } = product;
+              let isCarted = false;
+
+              if (id) {
+                isCarted = cartedIdArr.includes(id);
+              }
 
               return (
                 <ProductCard
                   key={index}
+                  length={length || {}}
+                  style={style || {}}
                   image={image || ""}
                   name={name || ""}
                   id={id || 0}
                   price={price || 0}
+                  isCarted={isCarted}
                 />
               );
             })}

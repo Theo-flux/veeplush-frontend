@@ -33,7 +33,9 @@ export const regValidation = (regData: TCustomerRegister) => {
   };
 
   if (!regData.username) {
-    error.username = "Choose a unique unsername pls";
+    error.username = "Choose a unique username pls";
+  } else if (regData.username.length < 4) {
+    error.username = "Username too short";
   } else {
     delete error.username;
   }

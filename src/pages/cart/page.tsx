@@ -1,8 +1,30 @@
-import { Container } from "../../components";
 import PageLayout from "../../layout/PageLayout";
+import { deleteCartedItem } from "../../services/cart";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Container, Toast } from "../../components";
 import { MdDelete } from "react-icons/md";
+import { useCartStore } from "../../store/customerCart";
+import { ClipLoader } from "react-spinners";
 
 function Cart() {
+  const queryClient = useQueryClient();
+  const { cart } = useCartStore();
+  const { mutate, isLoading } = useMutation(deleteCartedItem, {
+    onError: (error: { detail: string }) => {
+      Toast.error(error.detail);
+    },
+
+    onSuccess: (data) => {
+      Toast.success(data);
+      queryClient.invalidateQueries({ queryKey: ["customer_cart"] });
+    },
+  });
+
+  const handleDeleteItem = (arg: number) => {
+    mutate(arg);
+  };
+  console.log(cart);
+
   return (
     <PageLayout>
       <Container className="w-full h-screen">
@@ -26,119 +48,68 @@ function Cart() {
             </thead>
 
             <tbody className="w-full">
-              <tr className="w-full">
-                <td className="px-6 py-4 flex justify-start items-start">
-                  <figure className="w-[140px] h-[140px] shadow-md">
-                    <img
-                      className="w-full h-full object-cover"
-                      src="https://res.cloudinary.com/daclozrmx/image/upload/v1695636146/veeplush/qdfnw0xvxqyyczhcotqq.png"
-                      alt="carted-product"
-                    />
-                  </figure>
+              {cart.map((item, index) => {
+                const {
+                  product_id,
+                  product_img,
+                  sub_total,
+                  length,
+                  style,
+                  qty,
+                  name,
+                  price,
+                } = item;
 
-                  <div className="ml-3">
-                    <p className="text-[15px] leading-[30px] tracking-[2px]">
-                      Raw Virgin Hair
-                    </p>
+                return (
+                  <tr key={index} className="w-full">
+                    <td className="px-6 py-4 flex justify-start items-start">
+                      <figure className="w-[140px] h-[140px] shadow-md">
+                        <img
+                          className="w-full h-full object-cover"
+                          src={product_img}
+                          alt="carted-product"
+                        />
+                      </figure>
 
-                    <div className="mt-4">
-                      <p className="text-sm leading-[24px] tracking-[1.6px] text-grey">
-                        Length: 24 inches
-                      </p>
-                      <p className="text-sm leading-[24px] tracking-[1.6px] text-grey">
-                        Style: deep wave
-                      </p>
+                      <div className="ml-3">
+                        <p className="text-[15px] leading-[30px] tracking-[2px]">
+                          {name}
+                        </p>
 
-                      <button className="mt-3 text-error opacity-50 flex justify-center items-center px-1 border border-error">
-                        <MdDelete className="" />{" "}
-                        <p className="text-sm">Remove</p>
-                      </button>
-                    </div>
-                  </div>
-                </td>
+                        <div className="mt-4">
+                          <p className="text-sm leading-[24px] tracking-[1.6px] text-grey">
+                            Length: {length} inches
+                          </p>
+                          <p className="text-sm leading-[24px] tracking-[1.6px] text-grey">
+                            Style: {style}
+                          </p>
 
-                <td className="px-6 py-3 align-top">price</td>
+                          <button
+                            disabled={isLoading}
+                            onClick={() => handleDeleteItem(product_id)}
+                            className="mt-3 text-error opacity-50 flex justify-center items-center px-1 border border-error"
+                          >
+                            {isLoading ? (
+                              <ClipLoader size={10} color="#DC0000" />
+                            ) : (
+                              <>
+                                <MdDelete className="" />{" "}
+                                <p className="text-sm">Remove</p>
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    </td>
 
-                <td className="px-6 py-3 align-top">qty</td>
+                    <td className="px-6 py-3 align-top">{price}</td>
 
-                <td className="px-6 py-3 align-top">total</td>
-              </tr>
+                    <td className="px-6 py-3 align-top">{qty}</td>
 
-              <tr className="w-full">
-                <td className="px-6 py-4 flex justify-start items-start">
-                  <figure className="w-[140px] h-[140px] shadow-md">
-                    <img
-                      className="w-full h-full object-cover"
-                      src="https://res.cloudinary.com/daclozrmx/image/upload/v1695636146/veeplush/qdfnw0xvxqyyczhcotqq.png"
-                      alt="carted-product"
-                    />
-                  </figure>
-
-                  <div className="ml-3">
-                    <p className="text-[15px] leading-[30px] tracking-[2px]">
-                      Raw Virgin Hair
-                    </p>
-
-                    <div className="mt-4">
-                      <p className="text-sm leading-[24px] tracking-[1.6px] text-grey">
-                        Length: 24 inches
-                      </p>
-                      <p className="text-sm leading-[24px] tracking-[1.6px] text-grey">
-                        Style: deep wave
-                      </p>
-
-                      <button className="mt-3 text-error opacity-50 flex justify-center items-center px-1 border border-error">
-                        <MdDelete className="" />{" "}
-                        <p className="text-sm">Remove</p>
-                      </button>
-                    </div>
-                  </div>
-                </td>
-
-                <td className="px-6 py-3 align-top">price</td>
-
-                <td className="px-6 py-3 align-top">qty</td>
-
-                <td className="px-6 py-3 align-top">total</td>
-              </tr>
-
-              <tr className="w-full">
-                <td className="px-6 py-4 flex justify-start items-start">
-                  <figure className="w-[140px] h-[140px] shadow-md">
-                    <img
-                      className="w-full h-full object-cover"
-                      src="https://res.cloudinary.com/daclozrmx/image/upload/v1695636146/veeplush/qdfnw0xvxqyyczhcotqq.png"
-                      alt="carted-product"
-                    />
-                  </figure>
-
-                  <div className="ml-3">
-                    <p className="text-[15px] leading-[30px] tracking-[2px]">
-                      Raw Virgin Hair
-                    </p>
-
-                    <div className="mt-4">
-                      <p className="text-sm leading-[24px] tracking-[1.6px] text-grey">
-                        Length: 24 inches
-                      </p>
-                      <p className="text-sm leading-[24px] tracking-[1.6px] text-grey">
-                        Style: deep wave
-                      </p>
-
-                      <button className="mt-3 text-error opacity-50 flex justify-center items-center px-1 border border-error">
-                        <MdDelete className="" />{" "}
-                        <p className="text-sm">Remove</p>
-                      </button>
-                    </div>
-                  </div>
-                </td>
-
-                <td className="px-6 py-3 align-top">price</td>
-
-                <td className="px-6 py-3 align-top">qty</td>
-
-                <td className="px-6 py-3 align-top">total</td>
-              </tr>
+                    <td className="px-6 py-3 align-top">{sub_total}</td>
+                  </tr>
+                );
+              })}
             </tbody>
 
             <tfoot className="bg-[#F9F9F9]">

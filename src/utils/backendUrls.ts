@@ -17,4 +17,10 @@ export const VEEPLUSH_URLS = {
   PRODUCT: {
     all: "product",
   },
+
+  CART: {
+    add_order: "cart/add_order_item",
+    get_cart: "cart/customer_cart",
+    delete_item: "cart/delete_item",
+  },
 };
