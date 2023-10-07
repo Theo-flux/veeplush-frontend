@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import PageLayout from "../../layout/PageLayout";
 import { Link } from "react-router-dom";
 import { deleteCartedItem } from "../../services/cart";
@@ -8,6 +9,7 @@ import { MdDelete } from "react-icons/md";
 import { useCartStore } from "../../store/cart";
 import { ClipLoader } from "react-spinners";
 import { useCustomerStore } from "../../store/customer";
+import { toCurrency } from "../../utils/toCurrency";
 
 function Cart() {
   const queryClient = useQueryClient();
@@ -24,14 +26,24 @@ function Cart() {
     },
   });
 
+  const [total, setTotal] = useState(0);
+
   const handleDeleteItem = (arg: number) => {
     mutate(arg);
   };
 
+  useEffect(() => {
+    const totalPrice = Object.entries(cart).reduce(
+      (agg, [, obj]) => (agg += obj["sub_total"]),
+      0,
+    );
+    setTotal(totalPrice);
+  }, [cart]);
+
   return (
     <PageLayout>
       <Container className="w-full h-screen">
-        <div className="py-24 w-full h-full overflow-scroll">
+        <div className="pt-24 w-full h-auto max-h-[90%] overflow-scroll">
           {cart.length === 0 ? (
             <div className="h-full w-full flex flex-col justify-center items-center">
               <h1 className="text-veeblack text-2xl font-bold">
@@ -64,7 +76,7 @@ function Cart() {
             </div>
           ) : (
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 my-4 whitespace-nowrap">
-              <thead className="w-full text-xs border-b border-grey text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <thead className="w-full bg-white text-xs border-b border-grey text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0 z-30">
                 <tr className="w-full">
                   <th scope="col" className="px-6 py-3">
                     Product
@@ -96,7 +108,7 @@ function Cart() {
 
                   return (
                     <tr key={index} className="w-full">
-                      <td className="px-6 py-4 flex justify-start items-start">
+                      <td className="px-6 py-4 flex justify-start items-start whitespace-wrap">
                         <figure className="w-[140px] h-[140px] shadow-md">
                           <img
                             className="w-full h-full object-cover"
@@ -106,7 +118,7 @@ function Cart() {
                         </figure>
 
                         <div className="ml-3">
-                          <p className="text-[15px] leading-[30px] tracking-[2px]">
+                          <p className="text-[15px] leading-[30px] tracking-[2px] w-[200px] text-ellipsis overflow-hidden">
                             {name}
                           </p>
 
@@ -136,26 +148,36 @@ function Cart() {
                         </div>
                       </td>
 
-                      <td className="px-6 py-3 align-top">{price}</td>
+                      <td className="px-6 py-3 align-top">
+                        {toCurrency(price)}
+                      </td>
 
                       <td className="px-6 py-3 align-top">{qty}</td>
 
-                      <td className="px-6 py-3 align-top">{sub_total}</td>
+                      <td className="px-6 py-3 align-top">
+                        {toCurrency(sub_total)}
+                      </td>
                     </tr>
                   );
                 })}
               </tbody>
 
-              <tfoot className="bg-[#F9F9F9]">
+              <tfoot className="bg-[#F9F9F9] sticky bottom-0 z-30">
                 <tr className="">
                   <td className="px-6 py-3"></td>
                   <td className="px-6 py-3"></td>
-                  <td className="px-6 py-3">Total</td>
-                  <td className="px-6 py-3">total</td>
+                  <td className="px-6 py-3 font-bold">Total</td>
+                  <td className="px-6 py-3">{toCurrency(total)}</td>
                 </tr>
               </tfoot>
             </table>
           )}
+        </div>
+        <div className="w-full flex flex-col items-end w-[90%] px-4 lg:px-0 max-w-full mx-auto">
+          <p className="font-light text-xs mb-4">
+            Tax included and shipping calculated at checkout
+          </p>
+          <Button text="Checkout" />
         </div>
       </Container>
     </PageLayout>
