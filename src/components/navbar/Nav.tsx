@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { thisCustomer } from "../../services/auth";
 import { getCartedOrders } from "../../services/cart";
 import VeeplushLogo from "../../assets/images/veeplush_logo.svg";
@@ -36,7 +36,8 @@ function Nav() {
   const location = useLocation();
   const isActiveRoute = (href: string) => location.pathname === href;
   const { cart, update } = useCartStore();
-  const { customer, updateCustomer } = useCustomerStore();
+  const { customer, updateCustomer, removeCustomer } = useCustomerStore();
+  const queryClient = useQueryClient();
 
   const { data: cartData } = useQuery(["customer_cart"], () =>
     getCartedOrders(),
@@ -49,15 +50,20 @@ function Nav() {
   const handleLogOut = () => {
     removeToken();
     refetch();
-    updateCustomer({});
+    removeCustomer();
     update([]);
+    window.location.reload();
   };
 
   useEffect(() => {
     refetch();
     updateCustomer(data || {});
+    queryClient.invalidateQueries({ queryKey: ["customer_cart"] });
+  }, [data, queryClient, refetch, updateCustomer]);
+
+  useEffect(() => {
     update(cartData || []);
-  }, [cartData, data, refetch, update, updateCustomer]);
+  }, [cartData, update]);
 
   return (
     <>

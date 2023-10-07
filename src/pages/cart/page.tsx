@@ -43,7 +43,7 @@ function Cart() {
   return (
     <PageLayout>
       <Container className="w-full h-screen">
-        <div className="pt-24 w-full h-auto max-h-[90%] overflow-scroll">
+        <div className="pt-24 w-full h-full overflow-scroll">
           {cart.length === 0 ? (
             <div className="h-full w-full flex flex-col justify-center items-center">
               <h1 className="text-veeblack text-2xl font-bold">
@@ -75,7 +75,7 @@ function Cart() {
               </div>
             </div>
           ) : (
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 my-4 whitespace-nowrap">
+            <table className="w-full h-auto max-h-[90%] text-sm text-left text-gray-500 dark:text-gray-400 my-4 whitespace-nowrap">
               <thead className="w-full bg-white text-xs border-b border-grey text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0 z-30">
                 <tr className="w-full">
                   <th scope="col" className="px-6 py-3">
@@ -173,12 +173,14 @@ function Cart() {
             </table>
           )}
         </div>
-        <div className="w-full flex flex-col items-end w-[90%] px-4 lg:px-0 max-w-full mx-auto">
-          <p className="font-light text-xs mb-4">
-            Tax included and shipping calculated at checkout
-          </p>
-          <Button text="Checkout" />
-        </div>
+        {cart.length !== 0 && (
+          <div className="w-full flex flex-col items-end w-[90%] px-4 lg:px-0 max-w-full mx-auto">
+            <p className="font-light text-xs mb-4">
+              Tax included and shipping calculated at checkout
+            </p>
+            <Button text="Checkout" />
+          </div>
+        )}
       </Container>
     </PageLayout>
   );
