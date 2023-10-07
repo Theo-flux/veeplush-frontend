@@ -43,7 +43,7 @@ function Cart() {
   return (
     <PageLayout>
       <Container className="w-full h-screen">
-        <div className="pt-24 w-full h-full overflow-scroll">
+        <div className="h-full">
           {cart.length === 0 ? (
             <div className="h-full w-full flex flex-col justify-center items-center">
               <h1 className="text-veeblack text-2xl font-bold">
@@ -75,112 +75,115 @@ function Cart() {
               </div>
             </div>
           ) : (
-            <table className="w-full h-auto max-h-[90%] text-sm text-left text-gray-500 dark:text-gray-400 my-4 whitespace-nowrap">
-              <thead className="w-full bg-white text-xs border-b border-grey text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0 z-30">
-                <tr className="w-full">
-                  <th scope="col" className="px-6 py-3">
-                    Product
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Price
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Qty
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Subtotal
-                  </th>
-                </tr>
-              </thead>
+            <div className="pt-24 w-full h-[85%] overflow-scroll">
+              <table className="w-full h-auto text-sm text-left text-gray-500 dark:text-gray-400 my-4 whitespace-nowrap">
+                <thead className="w-full bg-white text-xs border-b border-grey text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0 z-30">
+                  <tr className="w-full">
+                    <th scope="col" className="px-6 py-3">
+                      Product
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Price
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Qty
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Subtotal
+                    </th>
+                  </tr>
+                </thead>
 
-              <tbody className="w-full">
-                {cart.map((item, index) => {
-                  const {
-                    product_id,
-                    product_img,
-                    sub_total,
-                    length,
-                    style,
-                    qty,
-                    name,
-                    price,
-                  } = item;
+                <tbody className="w-full">
+                  {cart.map((item, index) => {
+                    const {
+                      product_id,
+                      product_img,
+                      sub_total,
+                      length,
+                      style,
+                      qty,
+                      name,
+                      price,
+                    } = item;
 
-                  return (
-                    <tr key={index} className="w-full">
-                      <td className="px-6 py-4 flex justify-start items-start whitespace-wrap">
-                        <figure className="w-[140px] h-[140px] shadow-md">
-                          <img
-                            className="w-full h-full object-cover"
-                            src={product_img}
-                            alt="carted-product"
-                          />
-                        </figure>
+                    return (
+                      <tr key={index} className="w-full">
+                        <td className="px-6 py-4 flex justify-start items-start whitespace-wrap">
+                          <figure className="w-[140px] h-[140px] shadow-md">
+                            <img
+                              className="w-full h-full object-cover"
+                              src={product_img}
+                              alt="carted-product"
+                            />
+                          </figure>
 
-                        <div className="ml-3">
-                          <p className="text-[15px] leading-[30px] tracking-[2px] w-[200px] text-ellipsis overflow-hidden">
-                            {name}
-                          </p>
-
-                          <div className="mt-4">
-                            <p className="text-sm leading-[24px] tracking-[1.6px] text-grey">
-                              Length: {length} inches
-                            </p>
-                            <p className="text-sm leading-[24px] tracking-[1.6px] text-grey">
-                              Style: {style}
+                          <div className="ml-3">
+                            <p className="text-[15px] leading-[30px] tracking-[2px] w-[200px] text-ellipsis overflow-hidden">
+                              {name}
                             </p>
 
-                            <button
-                              disabled={isLoading}
-                              onClick={() => handleDeleteItem(product_id)}
-                              className="mt-3 text-error opacity-50 flex justify-center items-center px-1 border border-error"
-                            >
-                              {isLoading ? (
-                                <ClipLoader size={10} color="#DC0000" />
-                              ) : (
-                                <>
-                                  <MdDelete className="" />{" "}
-                                  <p className="text-sm">Remove</p>
-                                </>
-                              )}
-                            </button>
+                            <div className="mt-4">
+                              <p className="text-sm leading-[24px] tracking-[1.6px] text-grey">
+                                Length: {length} inches
+                              </p>
+                              <p className="text-sm leading-[24px] tracking-[1.6px] text-grey">
+                                Style: {style}
+                              </p>
+
+                              <button
+                                disabled={isLoading}
+                                onClick={() => handleDeleteItem(product_id)}
+                                className="mt-3 text-error opacity-50 flex justify-center items-center px-1 border border-error"
+                              >
+                                {isLoading ? (
+                                  <ClipLoader size={10} color="#DC0000" />
+                                ) : (
+                                  <>
+                                    <MdDelete className="" />{" "}
+                                    <p className="text-sm">Remove</p>
+                                  </>
+                                )}
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      </td>
+                        </td>
 
-                      <td className="px-6 py-3 align-top">
-                        {toCurrency(price)}
-                      </td>
+                        <td className="px-6 py-3 align-top">
+                          {toCurrency(price)}
+                        </td>
 
-                      <td className="px-6 py-3 align-top">{qty}</td>
+                        <td className="px-6 py-3 align-top">{qty}</td>
 
-                      <td className="px-6 py-3 align-top">
-                        {toCurrency(sub_total)}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
+                        <td className="px-6 py-3 align-top">
+                          {toCurrency(sub_total)}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
 
-              <tfoot className="bg-[#F9F9F9] sticky bottom-0 z-30">
-                <tr className="">
-                  <td className="px-6 py-3"></td>
-                  <td className="px-6 py-3"></td>
-                  <td className="px-6 py-3 font-bold">Total</td>
-                  <td className="px-6 py-3">{toCurrency(total)}</td>
-                </tr>
-              </tfoot>
-            </table>
+                <tfoot className="bg-[#F9F9F9]">
+                  <tr className="">
+                    <td className="px-6 py-3"></td>
+                    <td className="px-6 py-3"></td>
+                    <td className="px-6 py-3 font-bold">Total</td>
+                    <td className="px-6 py-3">{toCurrency(total)}</td>
+                  </tr>
+                </tfoot>
+              </table>
+
+              {cart.length !== 0 && (
+                <div className="w-full flex flex-col items-end w-[90%] px-4 lg:px-0 max-w-full mx-auto">
+                  <p className="font-light text-xs mb-4">
+                    Tax included and shipping calculated at checkout
+                  </p>
+                  <Button text="Checkout" />
+                </div>
+              )}
+            </div>
           )}
         </div>
-        {cart.length !== 0 && (
-          <div className="w-full flex flex-col items-end w-[90%] px-4 lg:px-0 max-w-full mx-auto">
-            <p className="font-light text-xs mb-4">
-              Tax included and shipping calculated at checkout
-            </p>
-            <Button text="Checkout" />
-          </div>
-        )}
       </Container>
     </PageLayout>
   );
