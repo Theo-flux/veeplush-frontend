@@ -8,7 +8,7 @@ import { Button } from "../../components/buttons";
 import { Container } from "../../components";
 import { TProducts } from "../../types/global";
 import { BeatLoader } from "react-spinners";
-import { useCartStore } from "../../store/customerCart";
+import { useCartStore } from "../../store/cart";
 
 function Products() {
   const [products, setProducts] = useState<Array<Partial<TProducts>>>([]);

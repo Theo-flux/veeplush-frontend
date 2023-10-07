@@ -29,7 +29,7 @@ const ProductCard = ({
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation(addToCart, {
     onError: () => {
-      Toast.error("Error adding to cart. Try again later");
+      Toast.error("Login or create account to add items to cart.");
     },
 
     onSuccess: () => {

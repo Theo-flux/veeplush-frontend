@@ -70,13 +70,16 @@ export const InputPassword = ({
 
 interface ISelectInput {
   id: string;
+  value: string | number;
   label: string;
   placeholder: string;
   options: Array<number | string>;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const SelectInput = ({
   id,
+  value,
   label,
   placeholder,
   options,
@@ -89,6 +92,7 @@ export const SelectInput = ({
       <select
         id={id}
         className="bg-transparent border border-grey text-grey text-sm focus:ring-purple focus:border-purple block w-full p-2"
+        value={value}
       >
         <option selected>{placeholder}</option>
         {options.map((data, index) => (
