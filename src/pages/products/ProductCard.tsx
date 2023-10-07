@@ -6,6 +6,7 @@ import { TOrderItem } from "../../types/global";
 import { Toast } from "../../components";
 import { useQueryClient } from "@tanstack/react-query";
 import { BsCartXFill } from "react-icons/bs";
+import { toCurrency } from "../../utils/toCurrency";
 
 interface IProductCard {
   image: string;
@@ -111,7 +112,7 @@ const ProductCard = ({
         </div>
 
         <div className="flex flex-col justify-center items-center">
-          <p className="text-purple text-2xl font-bold">${price}</p>
+          <p className="text-purple text-2xl font-bold">{toCurrency(price)}</p>
           <p className="text-grey text-xs mt-2">Orders | Reviews</p>
         </div>
       </div>
