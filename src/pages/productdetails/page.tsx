@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Container, InputNumber, SelectInput, Toast } from "../../components";
 import { Button, TransparentBtn } from "../../components/buttons";
@@ -9,8 +9,10 @@ import { addToCart } from "../../services/cart";
 import { TOrderItem, TProducts } from "../../types/global";
 import { BeatLoader } from "react-spinners";
 import { addToCartValidation } from "../../helpers/validation";
+import { toCurrency } from "../../utils/toCurrency";
 
 function ProductDetails() {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const param = useParams();
   const [details, setDetails] = useState<Partial<TProducts>>();
@@ -35,6 +37,7 @@ function ProductDetails() {
     onSuccess: () => {
       Toast.success("added to cart!");
       queryClient.invalidateQueries({ queryKey: ["customer_cart"] });
+      setTimeout(() => navigate("/hairs"), 2000);
     },
   });
 
@@ -105,7 +108,7 @@ function ProductDetails() {
                   </h1>
 
                   <p className="text-purple text-4xl font-bold mt-4">
-                    ${details?.price}
+                    {toCurrency(details?.price || 0)}
                   </p>
 
                   <div className="w-full flex justify-start mt-4">
