@@ -1,4 +1,4 @@
-import { TCustomerRegister, TLoginForm } from "../types/global";
+import { TCustomerRegister, TLoginForm, TOrderItem } from "../types/global";
 
 const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
@@ -52,6 +52,42 @@ export const regValidation = (regData: TCustomerRegister) => {
     error.password = "Enter your password pls";
   } else {
     delete error.password;
+  }
+
+  return error;
+};
+
+export const addToCartValidation = (product: TOrderItem) => {
+  type TOrderItemError = {
+    length?: string;
+    style?: string;
+    qty?: string;
+  };
+
+  const error: TOrderItemError = {
+    length: "",
+    style: "",
+    qty: "",
+  };
+
+  if (!product.length) {
+    error.length = "Choose a length";
+  } else {
+    delete error.length;
+  }
+
+  if (!product.style) {
+    error.style = "Choose a style";
+  } else {
+    delete error.style;
+  }
+
+  if (!product.qty) {
+    error.qty = "Select your qty";
+  } else if (product.qty === 0) {
+    error.qty = "Select your qty";
+  } else {
+    delete error.qty;
   }
 
   return error;

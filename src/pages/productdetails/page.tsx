@@ -1,23 +1,78 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { Container, InputNumber, SelectInput } from "../../components";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Container, InputNumber, SelectInput, Toast } from "../../components";
 import { Button, TransparentBtn } from "../../components/buttons";
 import PageLayout from "../../layout/PageLayout";
 import { productById } from "../../services/products";
-import { useState } from "react";
-import { TProducts } from "../../types/global";
+import { addToCart } from "../../services/cart";
+import { TOrderItem, TProducts } from "../../types/global";
 import { BeatLoader } from "react-spinners";
+import { addToCartValidation } from "../../helpers/validation";
 
 function ProductDetails() {
+  const queryClient = useQueryClient();
   const param = useParams();
   const [details, setDetails] = useState<Partial<TProducts>>();
   const [length, setLength] = useState<Array<number>>([]);
   const [style, setStyle] = useState<Array<string>>([]);
-
   const { data, isLoading } = useQuery(["product_detail"], () =>
     productById({ id: Number(param?.id) }),
   );
+  const [product, setProduct] = useState<TOrderItem>({
+    product_id: Number(param?.id),
+    length: data ? length[0] : 0,
+    style: "",
+    qty: 0,
+    sub_total: 0,
+  });
+
+  const { mutate } = useMutation(addToCart, {
+    onError: () => {
+      Toast.error("Login or create account to add items to cart.");
+    },
+
+    onSuccess: () => {
+      Toast.success("added to cart!");
+      queryClient.invalidateQueries({ queryKey: ["customer_cart"] });
+    },
+  });
+
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = event.target;
+
+    if (name === "qty") {
+      setProduct((prevState) => ({
+        ...prevState,
+        [name]: Number(value),
+        sub_total: Number(value) * (data?.price || 1),
+      }));
+    }
+
+    if (name === "length") {
+      setProduct((prevState) => ({
+        ...prevState,
+        [name]: Number(value),
+      }));
+    }
+
+    setProduct((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleAddToCart = () => {
+    const error = addToCartValidation(product);
+
+    if (Object.values(error).length !== 0) {
+      Toast.error(Object.values(error)[0]);
+    } else {
+      mutate(product);
+    }
+  };
 
   useEffect(() => {
     setDetails(data);
@@ -57,29 +112,33 @@ function ProductDetails() {
                     <div className="mr-4">
                       <SelectInput
                         id="length"
+                        name="length"
                         label="Length"
                         placeholder="Choose a length"
                         options={length}
+                        onChange={handleChange}
                       />
                     </div>
 
                     <SelectInput
                       id="style"
+                      name="style"
                       label="Style"
                       placeholder="Choose a style"
                       options={style}
+                      onChange={handleChange}
                     />
                   </div>
 
                   <div className="w-[150px] mt-4">
                     <InputNumber
                       id="quantity"
-                      name="quantity"
+                      name="qty"
                       label="Quantity"
                       placeholder={"quantity"}
                       min={1}
                       max={details?.stock_qty || 1}
-                      onChange={() => {}}
+                      onChange={handleChange}
                     />
                   </div>
 
@@ -92,7 +151,7 @@ function ProductDetails() {
                     <TransparentBtn
                       text="Add to cart"
                       className="py-2 "
-                      onClick={() => {}}
+                      onClick={handleAddToCart}
                     />
                   </div>
                 </div>
