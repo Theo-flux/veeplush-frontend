@@ -3,6 +3,7 @@ import { handleApiError } from "../utils/handleApiError";
 import { VEEPLUSH_URLS } from "../utils/backendUrls";
 import { setToken } from "../helpers/authTokens";
 import {
+  TCustomerInfo,
   TCustomerLogin,
   TCustomerRegister,
   TCustomerResponse,
@@ -40,6 +41,17 @@ export const loginCustomer = async (payload: TCustomerLogin) => {
 export const thisCustomer = async () => {
   try {
     const response = await veeplushApi.get(VEEPLUSH_URLS.CUSTOMER.me);
+    const data: TCustomerResponse = await response.data;
+
+    return data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
+};
+
+export const updateCustomerInfo = async (payload: TCustomerInfo) => {
+  try {
+    const response = await veeplushApi.post(VEEPLUSH_URLS.CUSTOMER.update_info, payload);
     const data: TCustomerResponse = await response.data;
 
     return data;

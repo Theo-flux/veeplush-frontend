@@ -1,6 +1,15 @@
-import { TCustomerRegister, TLoginForm, TOrderItem } from "../types/global";
+import {
+  TCustomerInfo,
+  TCustomerRegister,
+  TLoginForm,
+  TOrderItem,
+} from "../types/global";
 
 const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+const phoneNumberPattern = /^0[789][01][0-9]{8}$/;
+
+const isValidPhoneNumber = (phone_number: string) =>
+  phoneNumberPattern.test(phone_number);
 
 export const isValidEmail = (email: string) => emailPattern.test(email);
 
@@ -88,6 +97,71 @@ export const addToCartValidation = (product: TOrderItem) => {
     error.qty = "Select your qty";
   } else {
     delete error.qty;
+  }
+
+  return error;
+};
+
+export const checkoutInfoValidation = (info: TCustomerInfo) => {
+  const error: Partial<TCustomerInfo> = {
+    first_name: "",
+    last_name: "",
+    phone_number: "",
+    shipping_address: "",
+    country: "",
+    city: "",
+    state: "",
+    postal_code: "",
+  };
+
+  if (!info.first_name) {
+    error.first_name = "enter your first name";
+  } else {
+    delete error.first_name;
+  }
+
+  if (!info.last_name) {
+    error.last_name = "enter your last name";
+  } else {
+    delete error.last_name;
+  }
+
+  if (!info.shipping_address) {
+    error.shipping_address = "enter your shipping address";
+  } else {
+    delete error.shipping_address;
+  }
+
+  if (!info.country) {
+    error.country = "enter your country";
+  } else {
+    delete error.country;
+  }
+
+  if (!info.city) {
+    error.city = "enter your city";
+  } else {
+    delete error.city;
+  }
+
+  if (!info.state) {
+    error.state = "enter your state";
+  } else {
+    delete error.state;
+  }
+
+  if (!info.postal_code) {
+    error.postal_code = "enter your zip/postal code";
+  } else {
+    delete error.postal_code;
+  }
+
+  if (!info.phone_number) {
+    error.phone_number = "enter your phone_number";
+  } else if (!isValidPhoneNumber(info.phone_number)) {
+    error.phone_number = "your phone number is incorrect";
+  } else {
+    delete error.phone_number;
   }
 
   return error;

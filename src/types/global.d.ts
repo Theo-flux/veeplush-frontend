@@ -22,12 +22,24 @@ export type TCustomerResponse = {
   first_name: string;
   last_name: string;
   phone_number: string;
+  shipping_address: string;
   country: string;
   city: string;
   state: string;
   postal_code: string;
   created_at: string;
   updated_at: string;
+};
+
+export type TCustomerInfo = {
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  shipping_address: string;
+  country: string;
+  city: string;
+  state: string;
+  postal_code: string;
 };
 
 export type TLoginToken = {

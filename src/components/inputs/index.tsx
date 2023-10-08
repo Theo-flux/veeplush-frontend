@@ -5,7 +5,7 @@ interface IInputProps {
   id: string;
   name: string;
   placeholder: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
 }
 
@@ -26,7 +26,7 @@ export const InputText = ({
         onChange={onChange}
         className={`border-0 w-full ring-1 ring-grey ${
           error ? "ring-error" : ""
-        } px-3 py-2 focus:outline fous:outline-[1px] focus:outline-purple mb-1`}
+        } px-3 py-2 focus:outline fous:outline-4 focus:outline-purple mb-1`}
       />
       <small className="text-error">{error}</small>
     </div>
