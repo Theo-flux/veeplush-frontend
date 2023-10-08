@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { nanoid } from "nanoid";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { InputText } from "../../components";
@@ -8,8 +9,14 @@ import { TCustomerInfo } from "../../types/global";
 import { Link } from "react-router-dom";
 import { checkoutInfoValidation } from "../../helpers/validation";
 import { updateCustomerInfo } from "../../services/auth";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 
-const CheckoutInfo = () => {
+interface ICheckoutInfoProps {
+  shipping: number;
+  total: number;
+}
+
+const CheckoutInfo = ({ shipping, total }: ICheckoutInfoProps) => {
   const queryClient = useQueryClient();
   const [active, setActive] = useState<
     "cart" | "information" | "shipping" | "payment"
@@ -53,6 +60,26 @@ const CheckoutInfo = () => {
       mutate(info);
     }
   };
+
+  const config = {
+    public_key: import.meta.env.VITE_REACT_APP_FLUTTERWAVE_PUBLICK_KEY,
+    tx_ref: nanoid(),
+    amount: shipping + total,
+    currency: "USD",
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: customer.email || "",
+      phone_number: customer.phone_number || "",
+      name: customer.first_name || "",
+    },
+    customizations: {
+      title: `${customer.username} shopping items`,
+      description: "Payment for items in cart",
+      logo: "https://res.cloudinary.com/daclozrmx/image/upload/v1696794401/veeplush/veeplush_logo_ewtqz2.svg",
+    },
+  };
+
+  const handleFlutterPayment = useFlutterwave(config);
 
   useEffect(() => {
     if (customer.phone_number && customer.shipping_address) {
@@ -238,7 +265,22 @@ const CheckoutInfo = () => {
         </div>
       )}
 
-      {active === "payment" && <div className="my-4">Payment board</div>}
+      {active === "payment" && (
+        <div className="my-4">
+          <Button
+            text="Procced to payment"
+            onClick={() =>
+              handleFlutterPayment({
+                callback: (response) => {
+                  console.log(response);
+                  closePaymentModal();
+                },
+                onClose: () => {},
+              })
+            }
+          />
+        </div>
+      )}
     </div>
   );
 };

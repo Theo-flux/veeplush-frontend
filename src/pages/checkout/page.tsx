@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useCartStore } from "../../store/cart";
 import { useCustomerStore } from "../../store/customer";
@@ -10,8 +10,16 @@ import { Container } from "../../components";
 
 function Checkout() {
   const [shipping] = useState<number>(25.0);
-  const { cart, total } = useCartStore();
+  const { cart, total, updateTotal } = useCartStore();
   const { customer } = useCustomerStore();
+
+  useEffect(() => {
+    const totalPrice = Object.entries(cart).reduce(
+      (agg, [, obj]) => (agg += obj["sub_total"]),
+      0,
+    );
+    updateTotal(totalPrice);
+  }, [cart]);
 
   return (
     <PageLayout>
@@ -24,7 +32,7 @@ function Checkout() {
               </p>
 
               <div className="w-full my-4">
-                <CheckoutInfo />
+                <CheckoutInfo shipping={shipping} total={total} />
               </div>
             </div>
             <div className="h-full w-full lg:border-l lg:border-grey w-full lg:w-[40%]">
