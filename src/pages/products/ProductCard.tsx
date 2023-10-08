@@ -60,7 +60,6 @@ const ProductCard = ({
       style: Object.values(style)[0],
       qty: 1,
     };
-
     mutate(payload);
   };
 

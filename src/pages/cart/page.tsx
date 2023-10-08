@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import PageLayout from "../../layout/PageLayout";
 import { Link } from "react-router-dom";
 import { deleteCartedItem } from "../../services/cart";
@@ -13,7 +13,7 @@ import { toCurrency } from "../../utils/toCurrency";
 
 function Cart() {
   const queryClient = useQueryClient();
-  const { cart } = useCartStore();
+  const { cart, total, updateTotal } = useCartStore();
   const { customer } = useCustomerStore();
   const { mutate, isLoading } = useMutation(deleteCartedItem, {
     onError: (error: { detail: string }) => {
@@ -26,8 +26,6 @@ function Cart() {
     },
   });
 
-  const [total, setTotal] = useState(0);
-
   const handleDeleteItem = (arg: number) => {
     mutate(arg);
   };
@@ -37,7 +35,7 @@ function Cart() {
       (agg, [, obj]) => (agg += obj["sub_total"]),
       0,
     );
-    setTotal(totalPrice);
+    updateTotal(totalPrice);
   }, [cart]);
 
   return (
@@ -178,7 +176,9 @@ function Cart() {
                   <p className="font-light text-xs mb-4">
                     Tax included and shipping calculated at checkout
                   </p>
-                  <Button text="Checkout" />
+                  <Link to={{ pathname: "/checkout" }}>
+                    <Button text="Checkout" />
+                  </Link>
                 </div>
               )}
             </div>

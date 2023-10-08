@@ -14,6 +14,7 @@ export default {
       purple: "#F748EA",
       green: "#8BF602",
       veeblack: "#161616",
+      offgrey: "#F9F9F9",
       dark: {
         50: "#edeced",
         100: "#c6c5c8",

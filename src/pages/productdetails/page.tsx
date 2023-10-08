@@ -34,7 +34,8 @@ function ProductDetails() {
       Toast.error("Login or create account to add items to cart.");
     },
 
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log(data);
       Toast.success("added to cart!");
       queryClient.invalidateQueries({ queryKey: ["customer_cart"] });
       setTimeout(() => navigate("/hairs"), 2000);
@@ -46,7 +47,12 @@ function ProductDetails() {
   ) => {
     const { name, value } = event.target;
 
-    if (name === "qty") {
+    setProduct((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+
+    if (name == "qty") {
       setProduct((prevState) => ({
         ...prevState,
         [name]: Number(value),
@@ -54,17 +60,12 @@ function ProductDetails() {
       }));
     }
 
-    if (name === "length") {
+    if (name == "length") {
       setProduct((prevState) => ({
         ...prevState,
         [name]: Number(value),
       }));
     }
-
-    setProduct((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
   };
 
   const handleAddToCart = () => {
